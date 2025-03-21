@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sloan's Portfolio</title>
+    <!-- Include the Spline 3D Viewer script -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.79/build/spline-viewer.js"></script>
+    <style>
+      /* Root and Dark Mode */
+      :root {
+        --bg-overlay: white;
+      }
+      body.dark-mode {
+        --bg-overlay: black;
+      }
+      /* Global Styles */
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        color: #333;
+        background-color: #fff;
+        scroll-behavior: smooth;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+        transition: transform 0.3s ease, text-shadow 0.3s ease;
+        display: inline-block;
+      }
+      a:hover,
+      a:focus {
+        transform: scale(1.05);
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+      }
+      /* HEADER and Navigation */
+      header {
+        position: relative;
+        display: grid;
+        grid-template-columns: auto auto;
+        align-items: center;
+        padding: 20px 40px;
+        border-bottom: 1px solid #eee;
+      }
+      #dark-mode-toggle {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      #dark-mode-toggle button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.5em;
+        transition: transform 0.3s ease, text-shadow 0.3s ease;
+      }
+      #dark-mode-toggle button:hover {
+        transform: scale(1.05);
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+      }
+      .site-title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 2.5em;
+        font-weight: bold;
+        margin: 0;
+      }
+      nav {
+        justify-self: end;
+      }
+      nav a {
+        font-size: 1em;
+        letter-spacing: 0.5px;
+        margin-left: 20px;
+      }
+      /* Header Arrow Hint */
+      #header-arrow {
+        position: absolute;
+        cursor: pointer;
+        font-size: 0.9em;
+        color: #333;
+        background: transparent;
+        padding: 5px;
+      }
+      #header-arrow .arrow {
+        display: inline-block;
+        margin-right: 5px;
+        transform: rotate(180deg);
+        animation: bounce 2s infinite;
+      }
+      @keyframes bounce {
+        0%, 100% { transform: rotate(180deg) translateY(-10px); }
+        50% { transform: rotate(180deg) translateY(0px); }
+      }
+      /* Main Content Views */
+      #content > section.view {
+        display: none;
+        padding: 60px 20px;
+        min-height: 80vh;
+        position: relative;
+      }
+      #content > section.view.active {
+        display: block;
+      }
+      /* HOME (Landing) VIEW */
+      #view-home {
+        overflow: hidden;
+      }
+      .spline-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+      #spline-background-right {
+        right: 0;
+        transform: translate(450px, 90px);
+      }
+      #spline-background-left {
+        left: 0;
+        transform: translate(-450px, 90px) scale(0.83);
+      }
+      .spline-logo-cover {
+        position: absolute;
+        width: 150px;
+        height: 50px;
+        background-color: var(--bg-overlay);
+        pointer-events: none;
+        z-index: 10;
+      }
+      #spline-logo-cover-left {
+        top: 640px;
+        right: 575px;
+      }
+      .profile-icon {
+        width: 240px;
+        height: 240px;
+        border-radius: 50%;
+        background-color: #ccc;
+        overflow: hidden;
+        margin: 20px auto;
+      }
+      .profile-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 20px auto;
+        font-size: 1em;
+        z-index: 1;
+        text-align: center;
+      }
+      /* GROUP and PROJECT ITEM Titles */
+      .group-title {
+        font-size: 2em;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        text-align: left;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 5px;
+      }
+      .project-item {
+        margin-bottom: 40px;
+      }
+      /* Project Subtitles and Categories */
+      .project-subtitle {
+        font-size: 1.5em;
+        text-align: left;
+        margin-bottom: 20px;
+        border-left: 4px solid #666;
+        padding-left: 10px;
+      }
+      .project-categories {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+      .project-categories .category {
+        flex: 1;
+        padding: 0 10px;
+      }
+      .project-categories h3 {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+      }
+      .project-categories ul {
+        list-style: disc;
+        padding-left: 20px;
+        margin: 0;
+      }
+      /* Uniform Image Sizing (increased by 30%) */
+      .uniform-img {
+        width: 100%;
+        height: 325px; /* 250px + ~30% */
+        object-fit: contain;
+        display: block;
+        margin: 0 auto 10px;
+      }
+      /* Layout for 3 main columns and the extra (4th) column */
+      .project-content {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+      }
+      .project-columns {
+        flex: 3;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+      .project-column {
+        text-align: center;
+      }
+      .project-extra {
+        flex: 1;
+        text-align: center;
+      }
+      /* DARK MODE Styles */
+      body.dark-mode {
+        background-color: #000;
+        color: #fff;
+      }
+      body.dark-mode header {
+        border-bottom-color: #444;
+      }
+      body.dark-mode #dark-mode-toggle button {
+        color: #fff;
+      }
+      /* RESPONSIVE Adjustments */
+      @media (max-width: 768px) {
+        header {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        #dark-mode-toggle,
+        nav {
+          position: static;
+        }
+        .site-title {
+          position: static;
+          transform: none;
+          margin-top: 10px;
+        }
+        nav {
+          margin-top: 10px;
+          justify-content: center;
+        }
+        .project-categories {
+          flex-direction: column;
+        }
+        .project-categories .category {
+          margin-bottom: 10px;
+        }
+        /* On small screens, stack the content */
+        .project-content {
+          flex-direction: column;
+        }
+        .project-columns {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- COMMON HEADER -->
+    <header>
+      <div id="dark-mode-toggle">
+        <span id="toggle-text">Want to try darkmode? =></span>
+        <button id="toggle-button" aria-label="Toggle Dark Mode">💡</button>
+      </div>
+      <div class="site-title">Sloan Zammouri</div>
+      <nav id="nav-container"></nav>
+    </header>
+    <!-- Header Arrow -->
+    <div id="header-arrow"></div>
+    <!-- CONTENT VIEWS -->
+    <div id="content">
+      <!-- HOME (Landing) VIEW -->
+      <section id="view-home" class="view active">
+        <div class="spline-container" id="spline-background-right">
+          <spline-viewer url="https://prod.spline.design/SF0HZyOa4ny9uH31/scene.splinecode"></spline-viewer>
+        </div>
+        <div class="spline-container" id="spline-background-left">
+          <spline-viewer url="https://prod.spline.design/IdHegwvkadp0hnOQ/scene.splinecode"></spline-viewer>
+        </div>
+        <div class="spline-logo-cover" id="spline-logo-cover"></div>
+        <div class="spline-logo-cover" id="spline-logo-cover-left"></div>
+        <div class="profile-icon">
+          <img src="pictures_portfolio/profilepick.jpg" alt="Profile Picture" />
+        </div>
+        <div class="contact-info">
+          <a href="mailto:sloan.zammouri@epfl.ch">sloan.zammouri@epfl.ch</a>
+          <a href="https://www.linkedin.com/in/sloan-zammouri-a10057272/" target="_blank">linkedin.com/sloan-zammouri</a>
+          <a href="tel:+41762072783">+41762072783</a>
+          <a href="Resume_Sloan_Zammouri_2024.pdf" target="_blank" rel="noopener noreferrer" download>Download Resume</a>
+        </div>
+      </section>
+      <!-- PERSONAL PROJECTS VIEW -->
+      <section id="view-personal" class="view">
+        <!-- Group: Xplore -->
+        <h2 class="group-title">
+          Xplore
+          <img src="pictures_portfolio/Xplorelogo.jpg" alt="Xplore Logo" style="width: 40px; height: 40px; margin-left: 10px;" />
+        </h2>
+        
+        <!-- PROJECT ITEM 1 -->
+        <div class="project-item">
+          <h3 class="project-subtitle">Design of robotic wrist and gripper, 2022</h3>
+          <div class="project-categories">
+            <div class="category">
+              <h3>What I did</h3>
+              <ul>
+                <li>Designed and prototyped a robotic wrist using differential belts</li>
+                <li>Engineered a custom gripper with a "two way screw" mechanism for long stroke</li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>What I learned</h3>
+              <ul>
+                <li>Fusion360 proficiency, 3D printing</li>
+                <li>Technical drawings, tolerances and norms </li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>Outcome</h3>
+              <ul>
+                <li>Working end effector, always grabing objects and hands at events :D</li>
+                <li>3rd place at the European Rover Challenge, and best manipulation award 🏆(<a href="https://roverchallenge.eu/certificate/2023-onsite-epfl-xplore-sloan-zammouri/" target="_blank" rel="noopener noreferrer">certificate here</a>)
+                  !</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-columns">
+              <div class="project-column">
+                <img src="pictures_portfolio/Kerby_gripper.png" alt="Kerby Gripper" class="uniform-img" />
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/timelapse_kerbygripper.webm" alt="Kerby Timelapse" class="uniform-img" />
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/kerby_and_spot.jpg" alt="Kerby and Spot" class="uniform-img" style="width: 120%; height: 120%; object-fit: contain;" />/>
+              </div>
+            </div>
+            <div class="project-extra">
+              <img src="pictures_portfolio/maintenance_task.webm" alt="Maintenance Task" class="uniform-img" />
+            </div>
+          </div>
+        </div>
+        <!-- PROJECT ITEM 2 -->
+        <div class="project-item">
+          <h3 class="project-subtitle">Design and manufacturing of a robotic joint, 2023</h3>
+          <div class="project-categories">
+            <div class="category">
+              <h3>What I did</h3>
+              <ul>
+                <li>Extensive litterature review of actuators and drives</li>
+                <li>Design and manufacturing of a custom cycloidal drive for low backlash</li>
+                <li>Design and manufacturing of a universal hollow robotic joint; integratting motor, drive and encoders</li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>What I learned</h3>
+              <ul>
+                <li>Solidworks and Inventor (some features were not in other softwares)</li>
+                <li>Extensive knowledge on motors, drives, actuation types, encoders, controlers...</li>
+                <li>Technical drawings respecting industrial standards</li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>Outcome</h3>
+              <ul>
+                <li>A robotic joint that is still used at Xplore because of its accuracy (sub mm), strenght, modularity and ease of use! 💪</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-columns">
+              <div class="project-column">
+                <img src="pictures_portfolio/joint_cut.png" alt="Joint cut" class="uniform-img" />
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/cycloidal.webm" alt="Cycloidal" class="uniform-img" />
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/joint_rotating.webm" alt="Joint rotating" class="uniform-img" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- PROJECT ITEM 3 -->
+        <div class="project-item">
+          <h3 class="project-subtitle">Design, manufacturing, assembly of a 6DOF robotic arm, 2024</h3>
+          <div class="project-categories">
+            <div class="category">
+              <h3>What I did</h3>
+              <ul>
+                <li>Managed a team of students to build a 6DOF robotic arm.</li>
+                <li>Corrected all the parts and made them in a mechanical workshop.</li>
+                <li>Assembled the arm and characterized it.</li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>What I learned</h3>
+              <ul>
+                <li>Team work, time management, budget managemnt, system engineering.</li>
+                <li>Manufacturing: turning, milling, CNC, bending, soldering (TIG), SLA printing, crimping (cables, connectos), carbon fiber manufacturing</li>
+                <li>Simulation: Abaqus and Ansys</li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>Outcome</h3>
+              <ul>
+                <li>A fully custom 6DOF arm that is still used at Xplore 🤩</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-columns">
+              <div class="project-column">
+                <img src="pictures_portfolio/arm_rendered.png" alt="Arm rendered" class="uniform-img" />
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/onyxarm_studiopic.jpg" alt="Onyx Studio" class="uniform-img" />
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/rover_in_krakow.jpg" alt="Rover in Krakow" class="uniform-img" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- PROJECT ITEM 4 -->
+        <div class="project-item">
+          <h3 class="project-subtitle">Control and Inverse Kinematics, 2024</h3>
+          <div class="project-categories">
+            <div class="category">
+              <h3>What I did</h3>
+              <ul>
+                <li>Tuned all robotic joints in velocity and position; implemented a dual loop and feed-forward in position.</li>
+                <li>Implemented Inverse kinematics for our specific arm architecture.</li>
+                <li>Played with torque sensor outputs to create a compliant/transparent mode.</li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>What I learned</h3>
+              <ul>
+                <li>Applied control theory and Inverse Kinematics that I studied in class.</li>
+                <li>Learned ROS2 (Humble), MoveIt and Rviz.</li>
+                <li>Applied C++ and Python.</li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>Outcome</h3>
+              <ul>
+                <li>The arm was working well at the competition! (<a href="https://roverchallenge.eu/certificate/epfl-xplore-sloan-zammouri-erc2024-on-site/" target="_blank" rel="noopener noreferrer">certificate here</a>)
+                </li>
+                <li>It is still used everyday at Xplore and the team tries to impove the software.</li>
+                <li>We tested features like compliant mode, but so much things are left to explore!</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-columns">
+              <div class="project-column">
+                <img src="pictures_portfolio/IK_onyx.webm" alt="Inverse Kinematics of Onyx" class="uniform-img" />
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/probes_10x_speed.webm" alt="Probes timelapse" class="uniform-img" />
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/onyx_compliant.webm" alt="Compliant mode" class="uniform-img" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Group: Spacecraft Team -->
+        <h2 class="group-title">
+          Spacecraft Team
+          <img src="pictures_portfolio/spacecraftlogo.png" alt="Spacecraft Logo" style="width: 50px; height: 50px; margin-left: 10px;" />
+        </h2>
+        <!-- PROJECT ITEM 5 -->
+        <div class="project-item">
+          <h3 class="project-subtitle">Custom PCB for a CanSat, 2021</h3>
+          <div class="project-categories">
+            <div class="category">
+              <h3>What I did</h3>
+              <ul>
+                <li>With 3 friends, we engineered a little payload that was launched in a 2 meter size rocket.</li>
+                <li>I was in charge of the electronics, so I designed the PCB.</li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>What I learned</h3>
+              <ul>
+                <li>Kicad, PCB design, Arduino, ESP32, STM32, sensors</li>
+                <li>Aerodynamics, recovery systems, flight control</li>
+                <li>Teamwork! Collaboration with other association (the RocketTeam)</li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>Outcome</h3>
+              <ul>
+                <li>Successful flight: CanSat launched, ejected, fins deployed, parachute deployed, landed where we launched it 🚀!!!</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-columns">
+              <div class="project-column">
+                <img src="pictures_portfolio/pcb2.webm" alt="PCB" class="uniform-img" />
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/cansat_precheck.webm" alt="Preflight test" class="uniform-img" />
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/cansat_launch.webm" alt="Launch" class="uniform-img" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- PROJECT ITEM 6 -->
+        <div class="project-item">
+          <h3 class="project-subtitle">Onboard Computer for CubeSat, 2022</h3>
+          <div class="project-categories">
+            <div class="category">
+              <h3>What I did</h3>
+              <ul>
+                <li>I was one of the member working on the onboard computer we sent in Space.</li>
+                <li>Integrated code to control power distribution within the OBC. </li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>What I learned</h3>
+              <ul>
+                <li>Power mangement, embeded systems, low level code.</li>
+                <li>Space-grade electronics and protocols.</li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>Outcome</h3>
+              <ul>
+                <li>The board was succesfuly sent in Space and we are receiving data!</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-columns">
+              <div class="project-column">
+                <img src="pictures_portfolio/motherboard_spacecraft.png" alt="OBC" class="uniform-img" />
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/chess_pcb.jpg" alt="Bunny" class="uniform-img" />
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/spacecraft_launch.webm" alt="OBC launch" class="uniform-img" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- LAB EXPERIENCES VIEW -->
+      <section id="view-lab" class="view">
+        <!-- PROJECT ITEM 7 -->
+        <div class="project-item">
+          <h3 class="project-subtitle">Design, Manufacturing and Optimization of an edible soft pneumatic artificial muscle, 2024</h3>
+          <div class="project-categories">
+            <div class="category">
+              <h3>What I did</h3>
+              <ul>
+                <li>Tried different geometries using optimization to maximize output force of an soft pneumatic actuator</li>
+                <li>Tried lot of different mixtures of chemicals to improve the actuator's performances while being bio-compatible</li>
+                <li>Characterized the actuator with motion capture, isobaric and  isometric tests</li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>What I learned</h3>
+              <ul>
+                <li>Expertise in simulations with Comsol and Ansys: non linear and hyperelastic mechanics, fluids, thermodynamics, chemical reactions...</li>
+                <li>Matlab and optimization toolboxes</li>
+                <li>Soft robotics: bio-compatible materials, silicon manufacturing, advanced molding, chemistry</li>
+                <li>writing publication for high impact conferences</li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>Outcome</h3>
+              <ul>
+                <li>The final actuator demonstrated a significant progress, with its characteristics improving by a factor of 40 compared to the initial version.</li>
+                <li>Publication in IROS pending!</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-columns">
+              <div class="project-column">
+                <img src="pictures_portfolio/grace_timelapse.webm" alt="Grace timelapse" class="uniform-img"/>
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/graceFEM.png" alt="Grace FEM" class="uniform-img"/>
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/grace_test.png" alt="Grace test" class="uniform-img"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- PROJECT ITEM 8 -->
+        <div class="project-item">
+          <h3 class="project-subtitle">Optimization and Manufacturing of a dielectric elastomer artificial muscle, 2023</h3>
+          <div class="project-categories">
+            <div class="category">
+              <h3>What I did</h3>
+              <ul>
+                <li>Optimized a pre-existing dielectric elastromer technology to be applicable for medical uses</li>
+                <li>Manufactured prototypes in cleanroom</li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>What I learned</h3>
+              <ul>
+                <li>Multiphysics simulations on Comsol: non-linear mechanics, fluids, electromagnetics, electrostatics...</li>
+                <li>Cleanroom manufacturing and protocols</li>
+                <li>A lot of knowledge on the human body and about medical standards and norms</li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>Outcome</h3>
+              <ul>
+                <li>Unofrtunately I showed that the dielectric elastomer technology was not performant enough (yet) for their application</li>
+                <li>(They stopped the project...)</li>
+                <li>We did a publication in a conference about this work (<a href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/12945/1294505/An-artificial-urinary-sphincter-based-on-dielectric-elastomer-technology/10.1117/12.3004813.short" target="_blank" rel="noopener noreferrer">publication here</a>)
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-columns">
+              <div class="project-column">
+                <img src="pictures_portfolio/DEA_plots.png" alt="DEA plots" class="uniform-img"/>
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/cleanroom.jpg" alt="Cleanroom" class="uniform-img"/>
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/DEA_testjig.png" alt="DEA testjig" class="uniform-img"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- WORK EXPERIENCE VIEW -->
+      <section id="view-work" class="view">
+        <!-- PROJECT ITEM 9 -->
+        <div class="project-item">
+          <h3 class="project-subtitle">Drone integration in a wildfire monitoring system, 2024</h3>
+          <div class="project-categories">
+            <div class="category">
+              <h3>What I did</h3>
+              <ul>
+                <li>Learned DJI SDK and the software "Pantera" of the startup (<a href="https://www.umgrauemeio.com/en" target="_blank" rel="noopener noreferrer">their website here</a>)</li>
+                <li>Used ROS + Gazebo to create a simulation of drone missions to take footage of wildfire</li>
+                <li>Deployed little proof of concept offline on DJI hardware</li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>What I learned</h3>
+              <ul>
+                <li>Experience with ROS, Gazebo, Linux, FastAPI</li>
+                <li>Experience with drone devellopment and DJI hardware</li>
+                <li>Work with different teams, sometimes remotely</li>
+                <li>C# and windows application (sdk) devellopment</li>
+              </ul>
+            </div>
+            <div class="category">
+              <h3>Outcome</h3>
+              <ul>
+                <li>Proved that DJI Mavic drones were easily integrable with the startup eco-system "Pantera"</li>
+                <li>Really progressed in Portuguese!</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-columns">
+              <div class="project-column">
+                <img src="pictures_portfolio/umgrauemeio_fires.webm" alt="Fires" class="uniform-img"/>
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/umgrauemeio_scan.webm" alt="Scan" class="uniform-img"/>
+              </div>
+              <div class="project-column">
+                <img src="pictures_portfolio/dji.webp" alt="DJI" class="uniform-img"/>
+              </div>
+            </div>
+          </div>
+          <p>(Note: The start-up does not want me to use content that is not already on the web, sorry)</p>
+        </div>
+      </section>
+      <!-- HOBBIES VIEW (if needed) -->
+      <section id="view-hobbies" class="view">
+
+      <!-- HOBBIES -->
+      <div class="project-item">
+        <div class="project-categories">
+          <div class="category">
+            <h3>Music and Piano</h3>
+            <img src="pictures_portfolio/piano.webm" alt="Fires" class="uniform-img"/>
+          </div>
+          <div class="category">
+            <h3>Running!</h3>
+            <img src="pictures_portfolio/20kmLausanneSloan.jpg" alt="Fires" class="uniform-img"/>
+            <img src="pictures_portfolio/Marathon_Lausanne_2022.jpg" alt="Fires" class="uniform-img"/>
+          </div>
+          <div class="category">
+            <h3>Hackatons!</h3>
+            <img src="pictures_portfolio/lauzhack.jpg" alt="Fires" class="uniform-img"/>
+            <img src="pictures_portfolio/hackahealth.png" alt="Fires" class="uniform-img"/>
+            <img src="pictures_portfolio/X_talk.jpg" alt="Fires" class="uniform-img"/>
+          </div>
+          <div class="category">
+            <h3>Karate</h3>
+            <p>I don't have cool pictures yet despite of my 15 years of practice</p>
+          </div>
+
+          
+         
+      
+      </section>
+    </div>
+    <!-- JAVASCRIPT -->
+    <script>
+      /********* Dynamic Navigation and Arrow Behavior *********/
+      const pages = [
+        { id: "personal", label: "Personal Projects" },
+        { id: "lab", label: "Lab Experiences" },
+        { id: "work", label: "Work Experience" },
+        { id: "hobbies", label: "Hobbies" }
+      ];
+      const visitedPages = { personal: false, lab: false, work: false, hobbies: false };
+      const categoryOrder = ["personal", "lab", "work", "hobbies"];
+      const navContainer = document.getElementById("nav-container");
+      const headerArrow = document.getElementById("header-arrow");
+      let nextArrowCategory = null;
+      function updateNavigation(currentView) {
+        let navItems = [];
+        if (currentView === "home") {
+          pages.forEach(p => navItems.push(`<a href="#" data-view="${p.id}">${p.label}</a>`));
+        } else {
+          navItems.push(`<a href="#" data-view="home">Home</a>`);
+          pages.forEach(p => {
+            if (p.id !== currentView) navItems.push(`<a href="#" data-view="${p.id}">${p.label}</a>`);
+          });
+        }
+        navContainer.innerHTML = navItems.join("");
+        document.querySelectorAll("#nav-container a").forEach(link =>
+          link.addEventListener("click", navClickHandler)
+        );
+        updateLandingArrow();
+      }
+      function updateLandingArrow() {
+        let target = null;
+        for (let key of categoryOrder) {
+          if (!visitedPages[key]) { target = key; break; }
+        }
+        if (target) {
+          nextArrowCategory = target;
+          let arrowText = "";
+          if (target === "personal") arrowText = "click to see projects";
+          else if (target === "lab") arrowText = "click to see lab projects";
+          else if (target === "work") arrowText = "click to see work experience";
+          else if (target === "hobbies") arrowText = "click to see hobbies";
+          headerArrow.innerHTML = `<span class="arrow">&#x2193;</span><span>${arrowText}</span>`;
+          setTimeout(() => {
+            const targetButton = document.querySelector("#nav-container a[data-view='" + target + "']");
+            if (targetButton) {
+              const btnRect = targetButton.getBoundingClientRect();
+              const headerRect = document.querySelector("header").getBoundingClientRect();
+              const arrowWidth = headerArrow.offsetWidth;
+              const left = btnRect.left + btnRect.width / 2 - arrowWidth / 2;
+              const top = headerRect.bottom + 5;
+              headerArrow.style.left = left + "px";
+              headerArrow.style.top = top + "px";
+              headerArrow.style.display = "block";
+            }
+          }, 0);
+        } else {
+          headerArrow.style.display = "none";
+          nextArrowCategory = null;
+        }
+      }
+      window.addEventListener("resize", updateLandingArrow);
+      const toggleButton = document.getElementById("toggle-button");
+      const toggleText = document.getElementById("toggle-text");
+      toggleButton.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+        toggleText.textContent = document.body.classList.contains("dark-mode")
+          ? "You prefer lightmode? =>"
+          : "Want to try darkmode? =>";
+      });
+      let simulationFrameId = null, angle = 0;
+      function simulateContinuousMovement() {
+        if (!document.getElementById("view-home").classList.contains("active")) return;
+        document.querySelectorAll("#view-home spline-viewer").forEach(splineViewer => {
+          if (splineViewer && splineViewer.shadowRoot) {
+            const canvas = splineViewer.shadowRoot.querySelector("canvas");
+            if (canvas) {
+              const centerX = window.innerWidth / 2;
+              const centerY = window.innerHeight / 2;
+              const radiusX = window.innerWidth * 0.3;
+              const radiusY = window.innerHeight * 0.3;
+              const simulatedX = centerX + radiusX * Math.cos(angle);
+              const simulatedY = centerY + radiusY * Math.sin(angle);
+              const simulatedEvent = new MouseEvent("mousemove", {
+                bubbles: true,
+                cancelable: true,
+                clientX: simulatedX,
+                clientY: simulatedY,
+                screenX: simulatedX,
+                screenY: simulatedY
+              });
+              canvas.dispatchEvent(simulatedEvent);
+            }
+          }
+        });
+        angle += 0.01;
+        simulationFrameId = requestAnimationFrame(simulateContinuousMovement);
+      }
+      document.addEventListener("mousemove", (event) => {
+        if (!document.getElementById("view-home").classList.contains("active")) return;
+        document.querySelectorAll("#view-home spline-viewer").forEach(splineViewer => {
+          if (splineViewer && splineViewer.shadowRoot) {
+            const canvas = splineViewer.shadowRoot.querySelector("canvas");
+            if (canvas) {
+              const mouseMoveEvent = new MouseEvent("mousemove", {
+                bubbles: true,
+                cancelable: true,
+                clientX: event.clientX,
+                clientY: event.clientY,
+                screenX: event.screenX,
+                screenY: event.screenY
+              });
+              const pointerMoveEvent = new PointerEvent("pointermove", {
+                bubbles: true,
+                cancelable: true,
+                clientX: event.clientX,
+                clientY: event.clientY,
+                pointerType: "mouse"
+              });
+              canvas.dispatchEvent(mouseMoveEvent);
+              canvas.dispatchEvent(pointerMoveEvent);
+            }
+          }
+        });
+      });
+      function showView(viewId) {
+        document.querySelectorAll("#content > section.view").forEach(view => view.classList.remove("active"));
+        const targetView = document.getElementById("view-" + viewId);
+        if (targetView) targetView.classList.add("active");
+        const siteTitle = document.querySelector(".site-title");
+        if (viewId === "home") siteTitle.textContent = "Sloan Zammouri";
+        else if (viewId === "personal") siteTitle.textContent = "Personal Projects";
+        else siteTitle.textContent = viewId.charAt(0).toUpperCase() + viewId.slice(1);
+        if (viewId !== "home") visitedPages[viewId] = true;
+        updateNavigation(viewId);
+        if (viewId === "home") {
+          if (!simulationFrameId)
+            simulationFrameId = requestAnimationFrame(simulateContinuousMovement);
+        } else {
+          if (simulationFrameId) {
+            cancelAnimationFrame(simulationFrameId);
+            simulationFrameId = null;
+          }
+        }
+      }
+      function navClickHandler(e) {
+        e.preventDefault();
+        const viewName = this.getAttribute("data-view");
+        showView(viewName);
+      }
+      headerArrow.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (nextArrowCategory) showView(nextArrowCategory);
+      });
+      updateNavigation("home");
+      simulationFrameId = requestAnimationFrame(simulateContinuousMovement);
+    </script>
+  </body>
+</html>
