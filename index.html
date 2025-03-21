@@ -4,19 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sloan's Portfolio</title>
-
     <!-- Include the Spline 3D Viewer script -->
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.79/build/spline-viewer.js"></script>
-    
     <style>
       /* Root and Dark Mode */
       :root {
         --bg-overlay: white;
+        --top-bar-font-size: 25px; /* Default top bar font size */
       }
       body.dark-mode {
         --bg-overlay: black;
       }
-      
       /* Global Styles */
       * {
         box-sizing: border-box;
@@ -41,7 +39,6 @@
         transform: scale(1.05);
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
       }
-      
       /* HEADER and Navigation */
       header {
         position: relative;
@@ -67,12 +64,11 @@
         transform: scale(1.05);
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
       }
-      /* Base title style for 2560px width */
       .site-title {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        font-size: 2.5em;
+        font-size: var(--top-bar-font-size); /* Use the variable for font size */
         font-weight: bold;
         margin: 0;
       }
@@ -80,12 +76,11 @@
         justify-self: end;
       }
       nav a {
-        font-size: 1em;
+        font-size: calc(var(--top-bar-font-size) * 0.6); /* Use the variable for font size */
         letter-spacing: 0.5px;
         margin-left: 20px;
       }
-      
-      /* HEADER Arrow Hint */
+      /* Header Arrow Hint */
       #header-arrow {
         position: absolute;
         cursor: pointer;
@@ -104,7 +99,6 @@
         0%, 100% { transform: rotate(180deg) translateY(-10px); }
         50% { transform: rotate(180deg) translateY(0px); }
       }
-      
       /* Main Content Views */
       #content > section.view {
         display: none;
@@ -115,7 +109,6 @@
       #content > section.view.active {
         display: block;
       }
-      
       /* HOME (Landing) VIEW */
       #view-home {
         overflow: hidden;
@@ -170,10 +163,9 @@
         z-index: 1;
         text-align: center;
       }
-      
       /* GROUP and PROJECT ITEM Titles */
       .group-title {
-        font-size: 2em;
+        font-size: 1.9em;
         margin-top: 40px;
         margin-bottom: 20px;
         text-align: left;
@@ -183,10 +175,9 @@
       .project-item {
         margin-bottom: 40px;
       }
-      
       /* Project Subtitles and Categories */
       .project-subtitle {
-        font-size: 1.5em;
+        font-size: 1.4em;
         text-align: left;
         margin-bottom: 20px;
         border-left: 4px solid #666;
@@ -202,7 +193,7 @@
         padding: 0 10px;
       }
       .project-categories h3 {
-        font-size: 1.2em;
+        font-size: 1.1em;
         margin-bottom: 10px;
       }
       .project-categories ul {
@@ -210,17 +201,15 @@
         padding-left: 20px;
         margin: 0;
       }
-      
-      /* Uniform Image Sizing */
+      /* Uniform Image Sizing (increased by 30%) */
       .uniform-img {
         width: 100%;
-        height: 325px; /* Increased by ~30% relative to the original 250px */
+        height: 325px; /* 250px + ~30% */
         object-fit: contain;
         display: block;
         margin: 0 auto 10px;
       }
-      
-      /* Layout for 3 main columns and an extra (4th) column */
+      /* Layout for 3 main columns and the extra (4th) column */
       .project-content {
         display: flex;
         gap: 20px;
@@ -239,7 +228,6 @@
         flex: 1;
         text-align: center;
       }
-      
       /* DARK MODE Styles */
       body.dark-mode {
         background-color: #000;
@@ -251,15 +239,7 @@
       body.dark-mode #dark-mode-toggle button {
         color: #fff;
       }
-      
-      /* RESPONSIVE Adjustments with CSS Media Queries */
-      /* Scale the title proportionally for screens smaller than 2560px */
-      @media (max-width: 2560px) {
-        .site-title {
-          font-size: calc(2.5em * (100vw / 6000));
-        }
-      }
-      /* Additional breakpoints - example for very small screens */
+      /* RESPONSIVE Adjustments */
       @media (max-width: 768px) {
         header {
           grid-template-columns: 1fr;
@@ -273,8 +253,6 @@
           position: static;
           transform: none;
           margin-top: 10px;
-          /* Optionally fix the font size on very small screens */
-          font-size: 1.5em;
         }
         nav {
           margin-top: 10px;
@@ -304,17 +282,10 @@
         <button id="toggle-button" aria-label="Toggle Dark Mode">💡</button>
       </div>
       <div class="site-title">Sloan Zammouri</div>
-      <nav id="nav-container">
-        <!-- Example category buttons -->
-        <a href="#view-home">Home</a>
-        <a href="#projects">Projects</a>
-        <a href="#about">About</a>
-      </nav>
+      <nav id="nav-container"></nav>
     </header>
-    
     <!-- Header Arrow -->
-    <div id="header-arrow"><span class="arrow">↑</span> Scroll</div>
-    
+    <div id="header-arrow"></div>
     <!-- CONTENT VIEWS -->
     <div id="content">
       <!-- HOME (Landing) VIEW -->
@@ -334,12 +305,9 @@
           <a href="mailto:sloan.zammouri@epfl.ch">sloan.zammouri@epfl.ch</a>
           <a href="https://www.linkedin.com/in/sloan-zammouri-a10057272/" target="_blank">linkedin.com/sloan-zammouri</a>
           <a href="tel:+41762072783">+41762072783</a>
-          <a href="sloan_zammouri_resume.pdf" target="_blank" rel="noopener noreferrer">
-            Download Resume
-          </a>
+          <a href="sloan_zammouri_resume.pdf" target="_blank" rel="noopener noreferrer"> Download Resume</a>
         </div>
       </section>
-
       <!-- PERSONAL PROJECTS VIEW -->
       <section id="view-personal" class="view">
         <!-- Group: Xplore -->
@@ -347,7 +315,7 @@
           Xplore
           <img src="pictures_portfolio/Xplorelogo.jpg" alt="Xplore Logo" style="width: 40px; height: 40px; margin-left: 10px;" />
         </h2>
-        
+
         <!-- PROJECT ITEM 1 -->
         <div class="project-item">
           <h3 class="project-subtitle">Design of robotic wrist and gripper, 2022</h3>
@@ -511,7 +479,7 @@
               <ul>
                 <li>The arm was working well at the competition! (<a href="https://roverchallenge.eu/certificate/epfl-xplore-sloan-zammouri-erc2024-on-site/" target="_blank" rel="noopener noreferrer">certificate here</a>)
                 </li>
-                <li>It is still used everyday at Xplore and the team tries to impove the software.</li>
+                <li>It is still used everyday at Xplore and the team tries to improve the software.</li>
                 <li>We tested features like compliant mode, but so much things are left to explore!</li>
               </ul>
             </div>
@@ -821,10 +789,8 @@
             <p>I don't have cool pictures yet despite of my 15 years of practice</p>
           </div>
 
-          
-         
-      
-      </section>
+
+          </section>
     </div>
     <!-- JAVASCRIPT -->
     <script>
@@ -982,7 +948,34 @@
       });
       updateNavigation("home");
       simulationFrameId = requestAnimationFrame(simulateContinuousMovement);
+
+      // Function to calculate the maximal font size
+      function calculateMaxFontSize() {
+        const header = document.querySelector("header");
+        const title = document.querySelector(".site-title");
+        const nav = document.querySelector("nav");
+        const headerWidth = header.offsetWidth;
+        const titleWidth = title.offsetWidth;
+        const navWidth = nav.offsetWidth;
+        const totalWidth = titleWidth + navWidth;
+        const maxFontSize = (headerWidth / totalWidth) * parseFloat(getComputedStyle(title).fontSize);
+        return maxFontSize;
+      }
+
+      // Function to update the font size
+      function updateFontSize() {
+        const maxFontSize = calculateMaxFontSize();
+        const title = document.querySelector(".site-title");
+        const nav = document.querySelector("nav");
+        title.style.fontSize = `${maxFontSize}px`;
+        nav.style.fontSize = `${maxFontSize * 0.6}px`; // Adjust nav font size proportionally
+      }
+
+      // Update font size on window resize
+      window.addEventListener("resize", updateFontSize);
+
+      // Initial font size update
+      updateFontSize();
     </script>
   </body>
 </html>
-
