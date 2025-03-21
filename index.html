@@ -958,7 +958,7 @@
         const titleWidth = title.offsetWidth;
         const navWidth = nav.offsetWidth;
         const totalWidth = titleWidth + navWidth;
-        const maxFontSize = (headerWidth / totalWidth) * parseFloat(getComputedStyle(title).fontSize);
+        const maxFontSize = (headerWidth / totalWidth) * parseFloat(getComputedStyle(title).fontSize)*0.8;
         return maxFontSize;
       }
 
