@@ -4,8 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sloan's Portfolio</title>
+
     <!-- Include the Spline 3D Viewer script -->
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.79/build/spline-viewer.js"></script>
+    
     <style>
       /* Root and Dark Mode */
       :root {
@@ -14,6 +16,7 @@
       body.dark-mode {
         --bg-overlay: black;
       }
+      
       /* Global Styles */
       * {
         box-sizing: border-box;
@@ -38,6 +41,7 @@
         transform: scale(1.05);
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
       }
+      
       /* HEADER and Navigation */
       header {
         position: relative;
@@ -63,6 +67,7 @@
         transform: scale(1.05);
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
       }
+      /* Base title style for 2560px width */
       .site-title {
         position: absolute;
         left: 50%;
@@ -79,7 +84,8 @@
         letter-spacing: 0.5px;
         margin-left: 20px;
       }
-      /* Header Arrow Hint */
+      
+      /* HEADER Arrow Hint */
       #header-arrow {
         position: absolute;
         cursor: pointer;
@@ -98,6 +104,7 @@
         0%, 100% { transform: rotate(180deg) translateY(-10px); }
         50% { transform: rotate(180deg) translateY(0px); }
       }
+      
       /* Main Content Views */
       #content > section.view {
         display: none;
@@ -108,6 +115,7 @@
       #content > section.view.active {
         display: block;
       }
+      
       /* HOME (Landing) VIEW */
       #view-home {
         overflow: hidden;
@@ -162,6 +170,7 @@
         z-index: 1;
         text-align: center;
       }
+      
       /* GROUP and PROJECT ITEM Titles */
       .group-title {
         font-size: 2em;
@@ -174,6 +183,7 @@
       .project-item {
         margin-bottom: 40px;
       }
+      
       /* Project Subtitles and Categories */
       .project-subtitle {
         font-size: 1.5em;
@@ -200,15 +210,17 @@
         padding-left: 20px;
         margin: 0;
       }
-      /* Uniform Image Sizing (increased by 30%) */
+      
+      /* Uniform Image Sizing */
       .uniform-img {
         width: 100%;
-        height: 325px; /* 250px + ~30% */
+        height: 325px; /* Increased by ~30% relative to the original 250px */
         object-fit: contain;
         display: block;
         margin: 0 auto 10px;
       }
-      /* Layout for 3 main columns and the extra (4th) column */
+      
+      /* Layout for 3 main columns and an extra (4th) column */
       .project-content {
         display: flex;
         gap: 20px;
@@ -227,6 +239,7 @@
         flex: 1;
         text-align: center;
       }
+      
       /* DARK MODE Styles */
       body.dark-mode {
         background-color: #000;
@@ -238,7 +251,15 @@
       body.dark-mode #dark-mode-toggle button {
         color: #fff;
       }
-      /* RESPONSIVE Adjustments */
+      
+      /* RESPONSIVE Adjustments with CSS Media Queries */
+      /* Scale the title proportionally for screens smaller than 2560px */
+      @media (max-width: 2560px) {
+        .site-title {
+          font-size: calc(2.5em * (100vw / 2560));
+        }
+      }
+      /* Additional breakpoints - example for very small screens */
       @media (max-width: 768px) {
         header {
           grid-template-columns: 1fr;
@@ -252,6 +273,8 @@
           position: static;
           transform: none;
           margin-top: 10px;
+          /* Optionally fix the font size on very small screens */
+          font-size: 1.5em;
         }
         nav {
           margin-top: 10px;
@@ -281,10 +304,17 @@
         <button id="toggle-button" aria-label="Toggle Dark Mode">💡</button>
       </div>
       <div class="site-title">Sloan Zammouri</div>
-      <nav id="nav-container"></nav>
+      <nav id="nav-container">
+        <!-- Example category buttons -->
+        <a href="#view-home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+      </nav>
     </header>
+    
     <!-- Header Arrow -->
-    <div id="header-arrow"></div>
+    <div id="header-arrow"><span class="arrow">↑</span> Scroll</div>
+    
     <!-- CONTENT VIEWS -->
     <div id="content">
       <!-- HOME (Landing) VIEW -->
@@ -304,9 +334,12 @@
           <a href="mailto:sloan.zammouri@epfl.ch">sloan.zammouri@epfl.ch</a>
           <a href="https://www.linkedin.com/in/sloan-zammouri-a10057272/" target="_blank">linkedin.com/sloan-zammouri</a>
           <a href="tel:+41762072783">+41762072783</a>
-          <a href="sloan_zammouri_resume.pdf" target="_blank" rel="noopener noreferrer"> Download Resume</a>
+          <a href="sloan_zammouri_resume.pdf" target="_blank" rel="noopener noreferrer">
+            Download Resume
+          </a>
         </div>
       </section>
+
       <!-- PERSONAL PROJECTS VIEW -->
       <section id="view-personal" class="view">
         <!-- Group: Xplore -->
@@ -345,7 +378,7 @@
           <div class="project-content">
             <div class="project-columns">
               <div class="project-column">
-                <img src="pictures_portfolio/Kerby_gripper.png" alt="Kerby Gripper" class="uniform-img">
+                <img src="pictures_portfolio/Kerby_gripper.png" alt="Kerby Gripper" class="uniform-img" />
               </div>
               <div class="project-column">
                 <video class="uniform-img" autoplay loop muted>
@@ -395,7 +428,7 @@
           <div class="project-content">
             <div class="project-columns">
               <div class="project-column">
-                <img src="pictures_portfolio/joint_cut.png" alt="Joint cut" class="uniform-img">
+                <img src="pictures_portfolio/joint_cut.png" alt="Joint cut" class="uniform-img" >
               </div>
               <div class="project-column">
                 <video class="uniform-img" autoplay loop muted>
@@ -952,3 +985,4 @@
     </script>
   </body>
 </html>
+
