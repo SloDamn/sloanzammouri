@@ -87,13 +87,15 @@ body {
 }
 
 .landing-icon {
-  width: 64px;
-  height: 64px;
+  width: 400px;
+  height: 400px;
+  max-width: 80vw;
+  max-height: 80vw;
   border-radius: 50%;
   background: #fff;
-  opacity: 0.9;
+  opacity: 1; /* Made slightly opaque to look better as full portrait */
   box-shadow: 0 0 40px rgba(255,255,255,0.15);
-  animation: iconPulse 3s ease-in-out infinite;
+  object-fit: cover;
 }
 
 @keyframes iconPulse {
@@ -449,6 +451,9 @@ body {
 }
 
 .subsection-inner {
+  width: 100%;
+}
+.subsection-inner > *:not(.media-grid):not(.media-container) {
   max-width: 580px;
 }
 
@@ -734,3 +739,36 @@ body {
   }
 
 }
+
+/* ========== MEDIA CONTAINERS ========== */
+.media-container {
+  margin-top: 1.5rem;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  background: transparent;
+}
+.media-container img, .media-container video {
+  width: 100%;
+  height: auto;
+  max-height: 40vh;
+  object-fit: contain;
+  display: block;
+}
+.media-container--full {
+  max-height: 60vh;
+}
+
+.media-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  overflow-x: auto;
+}
+.media-grid .media-container {
+  flex: 1 1 0;
+  margin-top: 0;
+  min-width: 0;
+}
+

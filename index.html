@@ -20,7 +20,7 @@
   <div id="landing" class="landing">
     <div class="landing-content">
       <h1 class="landing-title">Welcome to Sloan's portfolio!</h1>
-      <div class="landing-icon"></div>
+      <img src="media/sloan.jpg" class="landing-icon" alt="Sloan">
       <button class="landing-btn" id="startBtn">click to start</button>
     </div>
   </div>
@@ -51,145 +51,96 @@
       <!-- Content Area -->
       <main class="content" id="content">
 
-        <!-- 2026: Coming Soon (full-width, no subsections) -->
+        <!-- 2026: NASA JPL (full-width, no subsections) -->
         <section class="section section--full" data-year="2026" id="section-2026" data-color="#000000">
           <div class="section-hero-full">
             <span class="section-year-tag">2026</span>
-            <h2>Coming Soon</h2>
+            <h2>Coming soon: NASA JPL</h2>
             <p class="section-desc">The future is being written...</p>
+            <div class="media-container media-container--full" style="max-width: 800px; margin: 2rem auto 0 auto;">
+              <img src="media/3_nasa/nasa-jpl-superlimbs-lab.jpg" alt="NASA JPL Superlimbs">
+            </div>
           </div>
         </section>
 
-        <!-- 2025: Star Wars (split, 2 subsections) -->
+        <!-- 2025: Master in Robotics (split, 2 subsections) -->
         <section class="section section--split" data-year="2025" id="section-2025" data-color="#181B5E">
           <div class="section-row">
             <div class="section-left">
               <div class="section-title-sticky">
                 <span class="section-year-tag">2025</span>
-                <h2>Star Wars</h2>
-                <p class="section-desc section-desc--fade">A long time ago in a galaxy far, far away...</p>
+                <h2>Master in Robotics</h2>
+                <p class="section-desc section-desc--fade">@EPFL</p>
               </div>
             </div>
             <div class="section-right">
-              <!-- Reversing DOM order for Bottom-Up visual flow -->
               <div class="hero-zone"></div>
               
-              <!-- NORMAL SUBSECTION FOR EPISODE V (NOW 02 TOP) -->
+              <!-- Subs 02 (ON TOP VISUALLY) -->
               <div class="subsection" data-color="#0F4C75">
                 <div class="subsection-inner">
                   <span class="subsection-number">02</span>
-                  <h3>Episode V: The Empire Strikes Back</h3>
-                  <p>After the Rebels are overpowered by the Empire on the ice planet Hoth, Luke begins Jedi training with Yoda, while his friends are pursued across the galaxy.</p>
-                  <div class="subsection-meta"><span class="tag">Sci-Fi</span><span class="tag">Drama</span><span class="tag">1980</span></div>
-                </div>
-              </div>
-
-              <!-- 3-COLUMN NESTED SPLIT FOR EPISODE IV (NOW 01 BOTTOM) -->
-              <div class="subsection subsection--split" data-color="#311459">
-                <div class="subsection-row">
-                  <div class="subsection-left">
-                    <div class="subsection-title-sticky">
-                      <span class="subsection-number">01</span>
-                      <h3>Episode IV: A New Hope</h3>
-                      <p class="subsection-desc--fade">Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station.</p>
-                      <div class="subsection-meta subsection-desc--fade"><span class="tag">Sci-Fi</span><span class="tag">Adventure</span><span class="tag">1977</span></div>
-                    </div>
-                  </div>
-                  <div class="subsection-right">
-                    <div class="hero-zone"></div>
-                    <div class="sub-subsection">
-                      <div class="subsection-inner">
-                        <h4>Part 1: Tatooine</h4>
-                        <p>The droids crash land on the desert planet. Luke buys them, discovers a hidden message, and tracks down the mysterious Obi-Wan Kenobi.</p>
-                      </div>
-                    </div>
-                    <div class="sub-subsection">
-                      <div class="subsection-inner">
-                        <h4>Part 2: Death Star</h4>
-                        <p>A daring rescue mission inside the Imperial station followed by an epic trench run to destroy the Empire's ultimate weapon.</p>
-                      </div>
-                    </div>
-                    <div class="sub-subsection with-gallery">
-                      <div class="subsection-inner">
-                        <h4>Trench Run Archives</h4>
-                        <p>A staggering visual culmination of practical effects charting the vast reaches of the galaxy.</p>
-                      </div>
-                      <div class="gallery-scatter">
-                        <div class="art-container art-1" data-speed="0.2">
-                          <img src="https://images.unsplash.com/photo-1537420327992-d6a192ee6ea9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Star Wars theme">
-                        </div>
-                        <div class="art-container art-2" data-speed="-0.15">
-                          <img src="https://images.unsplash.com/photo-1614728263952-84ea256f9679?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Star Wars space">
-                        </div>
-                        <div class="art-container art-3" data-speed="0.3">
-                          <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Nebula">
-                        </div>
-                      </div>
-                    </div>
+                  <h3>ANYbotics Internship</h3>
+                  <p>Working on advanced robotics and automation at ANYbotics.</p>
+                  <div class="subsection-meta"><span class="tag">Internship</span><span class="tag">Robotics</span></div>
+                  <div class="media-grid">
+                    <div class="media-container"><img src="media/2_epfl_master/1_anybotics/anybotics.jpg" alt="ANYbotics Internship"></div>
+                    <div class="media-container"><img src="media/2_epfl_master/1_anybotics/motors.jpg" alt="ANYbotics Motors"></div>
+                    <div class="media-container"><video autoplay loop muted playsinline src="media/2_epfl_master/1_anybotics/stomp.webm"></video></div>
                   </div>
                 </div>
               </div>
 
-              <!-- NORMAL SUBSECTION FOR EPISODE V -->
-              <!-- (Moved above Ep IV in DOM to be on top visually) -->
+              <!-- Subs 01 (AT BOTTOM VISUALLY) -->
+              <div class="subsection" data-color="#311459">
+                <div class="subsection-inner">
+                  <span class="subsection-number">01</span>
+                  <h3>Won NVIDIA hackathon</h3>
+                  <p>First place winner at the prestigious NVIDIA robotics hackathon.</p>
+                  <div class="subsection-meta"><span class="tag">Hackathon</span><span class="tag">NVIDIA</span></div>
+                  <div class="media-container">
+                    <video autoplay loop muted playsinline src="media/2_epfl_master/2_hackathon/hack_nvidia.webm"></video>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <!-- 2024: Lord of the Rings (split, 2 subsections) -->
+        <!-- 2024: Bachelor @EPFL Laidlaw (split, 2 subsections) -->
         <section class="section section--split" data-year="2024" id="section-2024" data-color="#0D4722">
           <div class="section-row">
             <div class="section-left">
               <div class="section-title-sticky">
                 <span class="section-year-tag">2024</span>
-                <h2>Lord of the Rings</h2>
-                <p class="section-desc section-desc--fade">One ring to rule them all...</p>
+                <h2>Bachelor @EPFL</h2>
+                <p class="section-desc section-desc--fade">Transitional Year</p>
               </div>
             </div>
             <div class="section-right">
               <div class="hero-zone"></div>
 
+              <!-- Subs 02 -->
               <div class="subsection" data-color="#216E3E">
                 <div class="subsection-inner">
                   <span class="subsection-number">02</span>
-                  <h3>The Two Towers</h3>
-                  <p>While Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally, Saruman.</p>
-                  <div class="subsection-meta"><span class="tag">Fantasy</span><span class="tag">War</span><span class="tag">2002</span></div>
+                  <h3>Master in Robotics @EPFL</h3>
+                  <p>Starting the journey into the Master's program.</p>
+                  <div class="media-container">
+                    <img src="media/2_epfl_master/epfl.webp" alt="EPFL Master">
+                  </div>
                 </div>
               </div>
 
-              <div class="subsection subsection--split" data-color="#185C33">
-                <div class="subsection-row">
-                  <div class="subsection-left">
-                    <div class="subsection-title-sticky">
-                      <span class="subsection-number">01</span>
-                      <h3>The Fellowship of the Ring</h3>
-                      <p class="subsection-desc--fade">A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring.</p>
-                      <div class="subsection-meta subsection-desc--fade"><span class="tag">Fantasy</span><span class="tag">Adventure</span><span class="tag">2001</span></div>
-                    </div>
-                  </div>
-                  <div class="subsection-right">
-                    <div class="hero-zone"></div>
-                    <div class="sub-subsection with-gallery">
-                      <div class="subsection-inner">
-                        <h4>Middle-Earth Vistas</h4>
-                        <p>Sweeping landscapes of New Zealand served as the majestic canvas for Tolkien's legendary world.</p>
-                      </div>
-                      <div class="gallery-scatter">
-                        <div class="art-container art-1" data-speed="-0.2">
-                          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Mountains">
-                        </div>
-                        <div class="art-container art-2" data-speed="0.25">
-                          <img src="https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Deep Forest">
-                        </div>
-                        <div class="art-container art-3" data-speed="-0.1">
-                          <img src="https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Nordic Landscape">
-                        </div>
-                        <div class="art-container art-4" data-speed="0.15">
-                          <img src="https://images.unsplash.com/photo-1508614589041-895b88991e3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Vast Nature">
-                        </div>
-                      </div>
-                    </div>
+              <!-- Subs 01 -->
+              <div class="subsection" data-color="#185C33">
+                <div class="subsection-inner">
+                  <span class="subsection-number">01</span>
+                  <h3>Laidlaw Oxford Program</h3>
+                  <p>Internship on drones simulation.</p>
+                  <div class="media-grid">
+                    <div class="media-container"><img src="media/1_epfl_bachelor/3_laidlaw/2_umgrauemeio/dji.webp" alt="DJI Drone"></div>
+                    <div class="media-container"><video autoplay loop muted playsinline src="media/1_epfl_bachelor/3_laidlaw/2_umgrauemeio/umgrauemeio_scan.webm"></video></div>
                   </div>
                 </div>
               </div>
@@ -197,99 +148,139 @@
           </div>
         </section>
 
-        <!-- 2023: The Matrix (split, 2 subsections) -->
-        <section class="section section--split" data-year="2023" id="section-2023" data-color="#0F5E24">
+        <!-- 2023: Laidlaw Oxford -->
+        <section class="section section--split" data-year="2023" id="section-laidlaw-2023" data-color="#0F5E24">
           <div class="section-row">
             <div class="section-left">
               <div class="section-title-sticky">
                 <span class="section-year-tag">2023</span>
-                <h2>The Matrix</h2>
-                <p class="section-desc section-desc--fade">What is the Matrix?</p>
+                <h2>Bachelor @EPFL</h2>
+              </div>
+            </div>
+            <div class="section-right">
+              <div class="hero-zone"></div>
+              <div class="subsection" data-color="#1A9630">
+                <div class="subsection-inner">
+                  <span class="subsection-number">01</span>
+                  <h3>Laidlaw Oxford Program</h3>
+                  <p>Research and Leadership program.</p>
+                  <div class="media-grid">
+                    <div class="media-container"><img src="media/1_epfl_bachelor/3_laidlaw/1_leader/certificate.jpg" alt="Laidlaw Certificate"></div>
+                    <div class="media-container"><img src="media/1_epfl_bachelor/3_laidlaw/1_leader/presentation.png" alt="Laidlaw Presentation"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2021-2023: Bachelor @EPFL Mega Section -->
+        <section class="section section--split" data-year="2021" id="section-bachelor" data-color="#2D4263">
+          <div class="section-row">
+            <div class="section-left">
+              <div class="section-title-sticky">
+                <span class="section-year-tag">2021</span>
+                <h2>Bachelor @EPFL</h2>
               </div>
             </div>
             <div class="section-right">
               <div class="hero-zone"></div>
 
-              <!-- SUBS 02 RELOADED (ON TOP VISUALLY) -->
-              <div class="subsection" data-color="#1A9630">
-                <div class="subsection-inner">
-                  <span class="subsection-number">02</span>
-                  <h3>The Matrix Reloaded</h3>
-                  <p>Neo and the rebel leaders estimate they have 72 hours until Zion falls to the machines. Neo must decide how he can save Trinity from a dark fate in his dreams.</p>
-                  <div class="subsection-meta"><span class="tag">Sci-Fi</span><span class="tag">Action</span><span class="tag">2003</span></div>
+              <!-- Child 1: Visual Absolute Bottom -->
+              <div class="section-hero-full" style="min-height: auto; padding-bottom: 2rem;">
+                <span class="section-year-tag">2021</span>
+                <h2>Bachelor at EPFL</h2>
+                <div class="media-container media-container--full" style="max-width: 1000px; margin: 2rem auto 0 auto;">
+                  <img src="media/1_epfl_bachelor/epfl.webp" alt="EPFL Bachelor">
                 </div>
               </div>
 
-              <!-- SUBS 01 ORIGINAL (AT BOTTOM VISUALLY) -->
+              <!-- Child 2: #01 Spacecraft Team (Visual Bottom-ish) -->
+              <div class="subsection" data-color="#1A9630">
+                <div class="subsection-inner">
+                  <span class="subsection-number">01</span>
+                  <h3>Spacecraft Team</h3>
+                  <p>Involvement in the EPFL Spacecraft Team.</p>
+                  <div class="media-grid">
+                    <div class="media-container"><img src="media/1_epfl_bachelor/1_spacecraft/motherboard_spacecraft.png" alt="Spacecraft Motherboard"></div>
+                    <div class="media-container"><img src="media/1_epfl_bachelor/1_spacecraft/chess_pcb.jpg" alt="Chess PCB"></div>
+                    <div class="media-container"><video autoplay loop muted playsinline src="media/1_epfl_bachelor/1_spacecraft/spacecraft_launch.webm"></video></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Child 3: #02 Xplore Intro (Visual Middle) -->
+              <div class="subsection" data-color="#311459">
+                <div class="subsection-inner">
+                  <span class="subsection-number">02</span>
+                  <h3>Xplore</h3>
+                  <p>Developing rovers for international competitions.</p>
+                  <div class="media-container">
+                    <img src="media/1_epfl_bachelor/2_xplore/xplore.webp" alt="Xplore Team">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Child 4: #03 Xplore Unified Nested Split (Visual Top) -->
               <div class="subsection subsection--split" data-color="#157A2A">
                 <div class="subsection-row">
                   <div class="subsection-left">
                     <div class="subsection-title-sticky">
-                      <span class="subsection-number">01</span>
-                      <h3>The Matrix</h3>
-                      <p class="subsection-desc--fade">A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.</p>
-                      <div class="subsection-meta subsection-desc--fade"><span class="tag">Sci-Fi</span><span class="tag">Action</span><span class="tag">1999</span></div>
+                      <span class="subsection-number">03</span>
+                      <h3>Xplore</h3>
                     </div>
                   </div>
                   <div class="subsection-right">
                     <div class="hero-zone"></div>
-                    <div class="sub-subsection with-gallery">
+                    
+                    <!-- Nested Child 1: #03.1 Gripper (Visual Bottom of nesting) -->
+                    <div class="sub-subsection">
                       <div class="subsection-inner">
-                        <h4>Cyberpunk Aesthetics</h4>
-                        <p>Defining the visual style of a generation with trench coats, bullet time, and towering neon logic grids.</p>
-                      </div>
-                      <div class="gallery-scatter">
-                        <div class="art-container art-1" data-speed="0.3">
-                          <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Matrix Code">
-                        </div>
-                        <div class="art-container art-2" data-speed="-0.25">
-                          <img src="https://images.unsplash.com/photo-1515630278258-407f66498911?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Neon city">
-                        </div>
-                        <div class="art-container art-4" data-speed="0.1">
-                          <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Retro tech">
+                        <span class="subsection-number">01</span>
+                        <h4>Gripper Design</h4>
+                        <p>Designing sophisticated gripping mechanisms for the Xplore rover.</p>
+                        <div class="media-grid">
+                          <div class="media-container"><img src="media/1_epfl_bachelor/2_xplore/1_gripper/Kerby_gripper.png" alt="Kerby Gripper"></div>
+                          <div class="media-container"><video autoplay loop muted playsinline src="media/1_epfl_bachelor/2_xplore/1_gripper/timelapse_kerbygripper.webm"></video></div>
+                          <div class="media-container"><video autoplay loop muted playsinline src="media/1_epfl_bachelor/2_xplore/1_gripper/maintenance_task.webm"></video></div>
                         </div>
                       </div>
                     </div>
+
+                    <!-- Nested Child 2: #03.2 Robotic Joint Design (Visual Middle) -->
+                    <div class="sub-subsection">
+                      <div class="subsection-inner">
+                        <span class="subsection-number">02</span>
+                        <h4>Robotic Joint Design</h4>
+                        <p>Engineering robust robotic joints.</p>
+                        <div class="media-grid">
+                          <div class="media-container"><video autoplay loop muted playsinline src="media/1_epfl_bachelor/2_xplore/2_joint/cycloidal.webm"></video></div>
+                          <div class="media-container"><video autoplay loop muted playsinline src="media/1_epfl_bachelor/2_xplore/2_joint/joint_exploded.mp4"></video></div>
+                          <div class="media-container"><video autoplay loop muted playsinline src="media/1_epfl_bachelor/2_xplore/2_joint/joint_rotating.webm"></video></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Nested Child 3: #03.3 Team Leader Arm (Visual Top of nesting) -->
+                    <div class="sub-subsection">
+                      <div class="subsection-inner">
+                        <span class="subsection-number">03</span>
+                        <h4>Team Leader Robotic Arm</h4>
+                        <p>Led the development of a robotic arm.</p>
+                        <div class="media-grid">
+                          <div class="media-container"><img src="media/1_epfl_bachelor/2_xplore/3_arm/rover_in_krakow.jpg" alt="Rover in Krakow"></div>
+                          <div class="media-container"><video autoplay loop muted playsinline src="media/1_epfl_bachelor/2_xplore/3_arm/onyx_compliant.webm"></video></div>
+                          <div class="media-container"><video autoplay loop muted playsinline src="media/1_epfl_bachelor/2_xplore/3_arm/probes_10x_speed.webm"></video></div>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
-
-        <!-- 2022: Harry Potter (split, 1 subsection) -->
-        <section class="section section--split" data-year="2022" id="section-2022" data-color="#5E3D0F">
-          <div class="section-row">
-            <div class="section-left">
-              <div class="section-title-sticky">
-                <span class="section-year-tag">2022</span>
-                <h2>Harry Potter</h2>
-                <p class="section-desc section-desc--fade">The boy who lived...</p>
-              </div>
-            </div>
-            <div class="section-right">
-              <div class="hero-zone"></div>
-              <div class="subsection" data-color="#7A5215">
-                <div class="subsection-inner">
-                  <span class="subsection-number">01</span>
-                  <h3>The Philosopher's Stone</h3>
-                  <p>An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.</p>
-                  <div class="subsection-meta"><span class="tag">Fantasy</span><span class="tag">Magic</span><span class="tag">2001</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- 2021: Inception (full-width, no subsections) -->
-        <section class="section section--full" data-year="2021" id="section-2021" data-color="#2D4263">
-          <div class="section-hero-full">
-            <span class="section-year-tag">2021</span>
-            <h2>Inception</h2>
-            <p class="section-desc">Your mind is the scene of the crime. A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.</p>
-          </div>
-        </section>
-
       </main>
     </div>
   </div>
