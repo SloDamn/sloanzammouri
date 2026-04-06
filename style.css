@@ -1,0 +1,649 @@
+/* ========== RESET & BASE ========== */
+:root {
+  --nav-w: 72px;
+  --sb-w: 4px;
+  --content-w: calc(100vw - var(--nav-w) - var(--sb-w));
+}
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #000;
+  color: #fff;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========== LANDING OVERLAY ========== */
+.landing {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.landing.fade-out {
+  opacity: 0;
+  transform: scale(1.05);
+  pointer-events: none;
+}
+
+.landing-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  animation: landingFadeIn 1.2s ease-out;
+}
+
+@keyframes landingFadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.landing-title {
+  font-size: clamp(1.6rem, 4vw, 3rem);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  text-align: center;
+  background: linear-gradient(135deg, #fff 0%, #888 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.landing-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.9;
+  box-shadow: 0 0 40px rgba(255,255,255,0.15);
+  animation: iconPulse 3s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% { box-shadow: 0 0 40px rgba(255,255,255,0.15); transform: scale(1); }
+  50% { box-shadow: 0 0 60px rgba(255,255,255,0.25); transform: scale(1.05); }
+}
+
+.landing-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  color: #fff;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.85rem 2.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.landing-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.05);
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.landing-btn:hover {
+  border-color: rgba(255,255,255,0.6);
+  box-shadow: 0 0 30px rgba(255,255,255,0.1);
+}
+
+.landing-btn:hover::before {
+  transform: translateX(0);
+}
+
+/* ========== SITE WRAPPER ========== */
+.site {
+  opacity: 0;
+  transition: opacity 0.6s ease 0.3s;
+}
+
+.site.visible {
+  opacity: 1;
+}
+
+/* ========== FIXED TIMELINE SIDEBAR ========== */
+/* The timeline is fixed – always pinned to the left of the screen */
+.timeline {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 72px;
+  z-index: 100;
+  background: #000;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: stretch;
+}
+
+.timeline-track {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 3rem 0;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 3rem;
+  bottom: 3rem;
+  width: 1px;
+  background: rgba(255,255,255,0.08);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.timeline-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(180deg, #00d4ff, #0088ff);
+  border-radius: 1px;
+  transition: height 0.15s ease;
+  box-shadow: 0 0 8px rgba(0,212,255,0.4);
+}
+
+.timeline-year {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: default;
+  transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-label {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.25);
+  transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-year.active .timeline-dot {
+  background: #00d4ff;
+  box-shadow: 0 0 10px rgba(0,212,255,0.8), 0 0 20px rgba(0,212,255,0.3);
+  transform: scale(1.6);
+}
+
+.timeline-year.active .timeline-label {
+  color: #00d4ff;
+  font-weight: 700;
+  font-size: 0.68rem;
+  text-shadow: 0 0 12px rgba(0,212,255,0.5);
+}
+
+/* ========== LAYOUT ========== */
+/* Offset content to the right to account for the fixed timeline */
+.layout {
+  margin-left: 72px;
+}
+
+.content {
+  width: 100%;
+}
+
+/* ========== SECTION: FULL WIDTH (no subsections) ========== */
+.section--full {
+  min-height: 100vh;
+  position: relative;
+}
+
+.section-hero-full {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 3rem;
+  position: relative;
+}
+
+.section-hero-full::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+}
+
+.section-year-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #00d4ff;
+  margin-bottom: 1.5rem;
+  padding: 0.3rem 1rem;
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 20px;
+  opacity: 0.8;
+}
+
+/* ========== SECTION: SPLIT (with subsections) ========== */
+/*
+  Layout for a section with subsections:
+  We use a dynamic var(--split-progress) updated by JS based on scroll.
+  When progress is 0: Left column is 100% wide.
+  When progress is 1: Left column is 25% wide.
+*/
+
+.section--split {
+  position: relative;
+  --split-progress: 0;
+}
+
+.section-row {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
+
+/* ---- LEFT COLUMN ---- */
+.section-left {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  /* Dynamically transition 100% -> 25% -> 12.5% (when active sub split) */
+  width: calc(
+    var(--content-w) * (1 - var(--split-progress)) + 
+    var(--split-progress) * (
+       0.25 * var(--content-w) - 0.125 * var(--content-w) * var(--active-sub-progress, 0)
+    )
+  );
+  flex-shrink: 0;
+  z-index: 2;
+  background: #000; /* important: acts as a sliding curtain over right column */
+  overflow: hidden;
+}
+
+/* The inner sticky panel fills the sticky column */
+.section-title-sticky {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+
+.section-year-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #00d4ff;
+  margin-bottom: calc(0.5rem + 1rem * (1 - var(--split-progress)));
+  padding: 0.3rem 1rem;
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 20px;
+  opacity: 0.8;
+}
+
+/* Dynamically scale the heading */
+.section-title-sticky h2 {
+  width: max-content;
+  max-width: 90vw;
+  font-size: calc(
+    (1.6rem + 3.4rem * (1 - var(--split-progress))) *
+    (1 - 0.2 * var(--active-sub-progress, 0))
+  );
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.6) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: calc(0.2rem + 0.8rem * (1 - var(--split-progress)));
+}
+
+/* Dynamically fade/shrink the descriptor text */
+.section-desc--fade {
+  opacity: calc(1 - var(--split-progress) * 2);
+  max-height: calc(120px * (1 - var(--split-progress) * 1.5));
+  overflow: hidden;
+  margin: 0;
+}
+
+/* Divider line fades in continuously */
+.section-left::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 15%;
+  bottom: 15%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.1), transparent);
+  opacity: var(--split-progress);
+}
+
+/* ---- RIGHT COLUMN ---- */
+.section-right {
+  --right-width: calc(0.75 * var(--content-w) + 0.125 * var(--content-w) * var(--active-sub-progress, 0));
+  width: var(--right-width);
+  flex-shrink: 0;
+  /* Perfectly anchors it to the right visually, sliding under the left curtain */
+  margin-left: calc(-1 * var(--right-width) * (1 - var(--split-progress)));
+  z-index: 1;
+}
+
+/* hero-zone: spacer at top of right columns.
+   Matches the JS transitionDistance for perfect synchronization. */
+.hero-zone {
+  height: 50vh;
+}
+
+/* ========== SUBSECTIONS ========== */
+.subsection {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  position: relative;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.subsection.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Ensure non-split subsections have padding */
+.subsection:not(.subsection--split) {
+  padding: 4rem 3rem 4rem 2.5rem;
+}
+
+.subsection::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 2.5rem;
+  right: 3rem;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.07), transparent);
+}
+
+.subsection:last-child::before {
+  display: none;
+}
+
+.subsection-inner {
+  max-width: 580px;
+}
+
+.subsection-number {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(0,212,255,0.5);
+  margin-bottom: 1.2rem;
+}
+
+.subsection-inner h3 {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.subsection-inner p {
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.85;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 1.6rem;
+}
+
+.subsection-meta {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.4);
+  transition: all 0.3s ease;
+}
+
+.tag:hover {
+  border-color: rgba(0,212,255,0.3);
+  color: rgba(0,212,255,0.7);
+}
+
+/* ========== NESTED 3-COLUMN SPLIT ========== */
+.subsection--split {
+  --sub-split-progress: 0;
+  /* Nested splits act as wrappers, so remove the fade/slide from the wrapper itself by making it fully visible */
+  opacity: 1;
+  transform: none;
+}
+
+.subsection-row {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  width: 100%;
+}
+
+.subsection-left {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  /* Retracts from 100% down to 12.5vw, fully exposing right column */
+  width: calc(
+    100% * (1 - var(--sub-split-progress)) + 
+    (0.125 * var(--content-w)) * var(--sub-split-progress)
+  );
+  flex-shrink: 0;
+  z-index: 2;
+  background: #000;
+  overflow: hidden;
+}
+
+.subsection-title-sticky {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 2.5rem;
+}
+
+.subsection-title-sticky h3 {
+  width: max-content;
+  max-width: 90vw;
+  font-size: calc(1.5rem + 1.2rem * (1 - var(--sub-split-progress)));
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: calc(0.5rem + 0.5rem * (1 - var(--sub-split-progress)));
+  color: #fff;
+}
+
+.subsection-desc--fade {
+  opacity: calc(1 - var(--sub-split-progress) * 2);
+  max-height: calc(150px * (1 - var(--sub-split-progress) * 1.5));
+  overflow: hidden;
+  margin: 0;
+}
+
+.subsection-left::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 20%;
+  bottom: 20%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.06), transparent);
+  opacity: var(--sub-split-progress);
+}
+
+.subsection-right {
+  /* It should always resolve to 75% of Content W globally */
+  width: calc(0.75 * var(--content-w));
+  flex-shrink: 0;
+  margin-left: calc(-0.75 * var(--content-w) * (1 - var(--sub-split-progress)));
+  z-index: 1;
+}
+
+/* Sub-subsections layer */
+.sub-subsection {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 4rem 3rem 4rem 2.5rem;
+  position: relative;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sub-subsection.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sub-subsection::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 2.5rem;
+  right: 3rem;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.05), transparent);
+}
+.sub-subsection:last-child::before { display: none; }
+
+
+/* ========== FULL-SECTION HERO TITLE ========== */
+.section-hero-full h2 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.6) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-desc {
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  font-weight: 300;
+  color: rgba(255,255,255,0.45);
+  max-width: 520px;
+  line-height: 1.7;
+}
+
+/* Section separator */
+.section--full::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.22); }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  :root {
+    --nav-w: 48px;
+  }
+  .timeline { width: 48px; }
+  .layout { margin-left: 48px; }
+  .timeline-label { font-size: 0.52rem; }
+
+  .section-left {
+    /* p1=1 -> 35%, p1=1, p2=1 -> 20% */
+    width: calc(
+      var(--content-w) * (1 - var(--split-progress)) + 
+      var(--split-progress) * (0.35 * var(--content-w) - 0.15 * var(--content-w) * var(--active-sub-progress, 0))
+    );
+  }
+  .section-right {
+    --right-width: calc(0.65 * var(--content-w) + 0.15 * var(--content-w) * var(--active-sub-progress, 0));
+  }
+  .section-title-sticky h2 {
+    font-size: calc(1.2rem + 1.8rem * (1 - var(--split-progress)));
+  }
+  
+  .subsection:not(.subsection--split) { padding: 3rem 1.5rem; }
+  .sub-subsection { padding: 3rem 1.5rem; }
+
+  .subsection-left {
+    width: calc(100% * (1 - var(--sub-split-progress)) + (0.2 * var(--content-w)) * var(--sub-split-progress));
+  }
+  .subsection-right {
+    width: 60%;
+    margin-left: calc(-60% * (1 - var(--sub-split-progress)));
+  }
+
+}

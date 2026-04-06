@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sloan's personal portfolio - A cinematic timeline of creative works and projects.">
+  <title>Sloan's Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Landing Overlay -->
+  <div id="landing" class="landing">
+    <div class="landing-content">
+      <h1 class="landing-title">Welcome to Sloan's portfolio!</h1>
+      <div class="landing-icon"></div>
+      <button class="landing-btn" id="startBtn">click to start</button>
+    </div>
+  </div>
+
+  <!-- Main Site -->
+  <div id="site" class="site">
+    <div class="layout">
+      <!-- Timeline Sidebar -->
+      <aside class="timeline" id="timeline">
+        <div class="timeline-track">
+          <div class="timeline-line">
+            <div class="timeline-progress" id="timelineProgress"></div>
+          </div>
+          <div class="timeline-year active" data-year="2026"><span class="timeline-dot"></span><span class="timeline-label">2026</span></div>
+          <div class="timeline-year" data-year="2025"><span class="timeline-dot"></span><span class="timeline-label">2025</span></div>
+          <div class="timeline-year" data-year="2024"><span class="timeline-dot"></span><span class="timeline-label">2024</span></div>
+          <div class="timeline-year" data-year="2023"><span class="timeline-dot"></span><span class="timeline-label">2023</span></div>
+          <div class="timeline-year" data-year="2022"><span class="timeline-dot"></span><span class="timeline-label">2022</span></div>
+          <div class="timeline-year" data-year="2021"><span class="timeline-dot"></span><span class="timeline-label">2021</span></div>
+        </div>
+      </aside>
+
+      <!-- Content Area -->
+      <main class="content" id="content">
+
+        <!-- 2026: Coming Soon (full-width, no subsections) -->
+        <section class="section section--full" data-year="2026" id="section-2026">
+          <div class="section-hero-full">
+            <span class="section-year-tag">2026</span>
+            <h2>Coming Soon</h2>
+            <p class="section-desc">The future is being written...</p>
+          </div>
+        </section>
+
+        <!-- 2025: Star Wars (split, 2 subsections) -->
+        <section class="section section--split" data-year="2025" id="section-2025">
+          <div class="section-row">
+            <div class="section-left">
+              <div class="section-title-sticky">
+                <span class="section-year-tag">2025</span>
+                <h2>Star Wars</h2>
+                <p class="section-desc section-desc--fade">A long time ago in a galaxy far, far away...</p>
+              </div>
+            </div>
+            <div class="section-right">
+              <div class="hero-zone"></div>
+              
+              <!-- 3-COLUMN NESTED SPLIT FOR EPISODE IV -->
+              <div class="subsection subsection--split">
+                <div class="subsection-row">
+                  <div class="subsection-left">
+                    <div class="subsection-title-sticky">
+                      <span class="subsection-number">01</span>
+                      <h3>Episode IV: A New Hope</h3>
+                      <p class="subsection-desc--fade">Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station.</p>
+                      <div class="subsection-meta subsection-desc--fade"><span class="tag">Sci-Fi</span><span class="tag">Adventure</span><span class="tag">1977</span></div>
+                    </div>
+                  </div>
+                  <div class="subsection-right">
+                    <div class="hero-zone"></div>
+                    <div class="sub-subsection">
+                      <div class="subsection-inner">
+                        <h4>Part 1: Tatooine</h4>
+                        <p>The droids crash land on the desert planet. Luke buys them, discovers a hidden message, and tracks down the mysterious Obi-Wan Kenobi.</p>
+                      </div>
+                    </div>
+                    <div class="sub-subsection">
+                      <div class="subsection-inner">
+                        <h4>Part 2: Death Star</h4>
+                        <p>A daring rescue mission inside the Imperial station followed by an epic trench run to destroy the Empire's ultimate weapon.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- NORMAL SUBSECTION FOR EPISODE V -->
+              <div class="subsection">
+                <div class="subsection-inner">
+                  <span class="subsection-number">02</span>
+                  <h3>Episode V: The Empire Strikes Back</h3>
+                  <p>After the Rebels are overpowered by the Empire on the ice planet Hoth, Luke begins Jedi training with Yoda, while his friends are pursued across the galaxy by Darth Vader and bounty hunter Boba Fett.</p>
+                  <div class="subsection-meta"><span class="tag">Sci-Fi</span><span class="tag">Drama</span><span class="tag">1980</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2024: Lord of the Rings (split, 2 subsections) -->
+        <section class="section section--split" data-year="2024" id="section-2024">
+          <div class="section-row">
+            <div class="section-left">
+              <div class="section-title-sticky">
+                <span class="section-year-tag">2024</span>
+                <h2>Lord of the Rings</h2>
+                <p class="section-desc section-desc--fade">One ring to rule them all...</p>
+              </div>
+            </div>
+            <div class="section-right">
+              <div class="hero-zone"></div>
+              <div class="subsection">
+                <div class="subsection-inner">
+                  <span class="subsection-number">01</span>
+                  <h3>The Fellowship of the Ring</h3>
+                  <p>A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.</p>
+                  <div class="subsection-meta"><span class="tag">Fantasy</span><span class="tag">Adventure</span><span class="tag">2001</span></div>
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="subsection-inner">
+                  <span class="subsection-number">02</span>
+                  <h3>The Two Towers</h3>
+                  <p>While Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally, Saruman, and his hordes of Isengard.</p>
+                  <div class="subsection-meta"><span class="tag">Fantasy</span><span class="tag">War</span><span class="tag">2002</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2023: The Matrix (split, 2 subsections) -->
+        <section class="section section--split" data-year="2023" id="section-2023">
+          <div class="section-row">
+            <div class="section-left">
+              <div class="section-title-sticky">
+                <span class="section-year-tag">2023</span>
+                <h2>The Matrix</h2>
+                <p class="section-desc section-desc--fade">What is the Matrix?</p>
+              </div>
+            </div>
+            <div class="section-right">
+              <div class="hero-zone"></div>
+              <div class="subsection">
+                <div class="subsection-inner">
+                  <span class="subsection-number">01</span>
+                  <h3>The Matrix</h3>
+                  <p>A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers. Reality is not what it seems.</p>
+                  <div class="subsection-meta"><span class="tag">Sci-Fi</span><span class="tag">Action</span><span class="tag">1999</span></div>
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="subsection-inner">
+                  <span class="subsection-number">02</span>
+                  <h3>The Matrix Reloaded</h3>
+                  <p>Neo and the rebel leaders estimate they have 72 hours until Zion falls to the machines. Neo must decide how he can save Trinity from a dark fate in his dreams.</p>
+                  <div class="subsection-meta"><span class="tag">Sci-Fi</span><span class="tag">Action</span><span class="tag">2003</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2022: Harry Potter (split, 1 subsection) -->
+        <section class="section section--split" data-year="2022" id="section-2022">
+          <div class="section-row">
+            <div class="section-left">
+              <div class="section-title-sticky">
+                <span class="section-year-tag">2022</span>
+                <h2>Harry Potter</h2>
+                <p class="section-desc section-desc--fade">The boy who lived...</p>
+              </div>
+            </div>
+            <div class="section-right">
+              <div class="hero-zone"></div>
+              <div class="subsection">
+                <div class="subsection-inner">
+                  <span class="subsection-number">01</span>
+                  <h3>The Philosopher's Stone</h3>
+                  <p>An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.</p>
+                  <div class="subsection-meta"><span class="tag">Fantasy</span><span class="tag">Magic</span><span class="tag">2001</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2021: Inception (full-width, no subsections) -->
+        <section class="section section--full" data-year="2021" id="section-2021">
+          <div class="section-hero-full">
+            <span class="section-year-tag">2021</span>
+            <h2>Inception</h2>
+            <p class="section-desc">Your mind is the scene of the crime. A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.</p>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
