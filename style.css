@@ -377,6 +377,23 @@ body {
   margin-bottom: calc(0.2rem + 0.8rem * (1 - var(--split-progress)));
 }
 
+.section-hero-img {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 2rem;
+  opacity: calc(1 - var(--split-progress) * 4);
+  transform: scale(calc(1 - var(--split-progress) * 0.15));
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.section-hero-img img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
 /* Dynamically fade/shrink the descriptor text */
 .section-desc--fade {
   opacity: calc(1 - var(--split-progress) * 2);
@@ -550,6 +567,23 @@ body {
   letter-spacing: -0.01em;
   margin-bottom: calc(0.5rem + 0.5rem * (1 - var(--sub-split-progress)));
   color: #fff;
+}
+
+.sub-hero-img {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 1.5rem;
+  opacity: calc(1 - var(--sub-split-progress) * 4);
+  transform: scale(calc(1 - var(--sub-split-progress) * 0.1));
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.sub-hero-img img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.4);
 }
 
 .subsection-desc--fade {
