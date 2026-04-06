@@ -94,7 +94,7 @@ function initObservers() {
     entries.forEach(e => {
       if (e.isIntersecting) e.target.classList.add('visible');
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
+  }, { threshold: 0.1, rootMargin: '0px 0px -2% 0px' });
   reveals.forEach(s => revealObs.observe(s));
 
   // Timeline update on scroll
@@ -110,26 +110,81 @@ function onScroll() {
     requestAnimationFrame(() => {
       updateTimeline();
       updateSplitSections();
+      updateAmbientBackground();
+      updateParallax();
       ticking = false;
     });
     ticking = true;
   }
 }
 
+// ========== AMBIENT BACKGROUND ==========
+function updateAmbientBackground() {
+  const ambientBg = document.getElementById('ambient-bg');
+  if (!ambientBg) return;
+
+  const colorNodes = document.querySelectorAll('[data-color]');
+  let bestNode = null;
+  let minDistance = Infinity;
+  const viewportCenter = window.innerHeight / 2;
+
+  colorNodes.forEach(node => {
+    const rect = node.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      let closestPoint = viewportCenter;
+      if (rect.bottom < viewportCenter) closestPoint = rect.bottom;
+      else if (rect.top > viewportCenter) closestPoint = rect.top;
+
+      const distance = Math.abs(viewportCenter - closestPoint);
+      // <= ensures nested/subsequent children that also span the center override their parents
+      if (distance <= minDistance) {
+        minDistance = distance;
+        bestNode = node;
+      }
+    }
+  });
+
+  if (bestNode) {
+    ambientBg.style.backgroundColor = bestNode.getAttribute('data-color');
+  }
+}
+
+// ========== PARALLAX GALLERY ==========
+function updateParallax() {
+  const parallaxItems = document.querySelectorAll('.art-container');
+  const h = window.innerHeight;
+  const centerY = h / 2;
+
+  parallaxItems.forEach(item => {
+    const rect = item.getBoundingClientRect();
+    if (rect.top < h && rect.bottom > 0) {
+      const itemCenter = rect.top + rect.height / 2;
+      const centerOff = itemCenter - centerY;
+      const speed = parseFloat(item.dataset.speed || "0.1");
+      const offset = centerOff * speed;
+      item.style.setProperty('--parallax-y', offset.toString());
+    }
+  });
+}
+
 // ========== DYNAMIC SPLIT SECTION ============
 function updateSplitSections() {
   const splits = document.querySelectorAll('.section--split');
   const h = window.innerHeight;
-  // Transition distance halved as requested
-  const transitionDistance = h / 2;
+  const transitionDistance = 300; // Snappier popping into columns
 
   splits.forEach(section => {
     const rect = section.getBoundingClientRect();
-    let progress = 0;
-    if (rect.top > 0) progress = 0;
-    else if (rect.top <= -transitionDistance) progress = 1;
-    else progress = -rect.top / transitionDistance;
-    section.style.setProperty('--split-progress', progress.toString());
+    let progress = 1;
+
+    const startSplit = h; 
+    const endSplit = h + transitionDistance;
+
+    if (rect.bottom >= endSplit) progress = 1;
+    else if (rect.bottom <= startSplit) progress = 0;
+    else progress = (rect.bottom - startSplit) / transitionDistance;
+
+    section.style.setProperty('--split-progress', Math.max(0, Math.min(1, progress)).toString());
   });
 
   // Handle nested splits
@@ -138,27 +193,14 @@ function updateSplitSections() {
 
   subSplits.forEach(section => {
     const rect = section.getBoundingClientRect();
-    let progress = 0;
+    let progress = 1;
     
-    if (rect.top > 0) {
-      progress = 0;
-    } else if (rect.top <= 0 && rect.top > -transitionDistance) {
-      progress = -rect.top / transitionDistance;
-    } else {
-      progress = 1;
-    }
+    const startSplit = h;
+    const endSplit = h + transitionDistance;
 
-    // Bottom boundary exit: restore layout back to 0 when exiting.
-    // Start exiting exactly when the bottom of this section hits the bottom of the screen (h),
-    // meaning the user has finished looking at Part 2 and is pulling up the next section.
-    const exitStart = h;
-    const exitEnd = h - transitionDistance;
-    
-    if (rect.bottom <= exitStart && rect.bottom > exitEnd) {
-      progress = (rect.bottom - exitEnd) / transitionDistance;
-    } else if (rect.bottom <= exitEnd) {
-      progress = 0;
-    }
+    if (rect.bottom >= endSplit) progress = 1;
+    else if (rect.bottom <= startSplit) progress = 0;
+    else progress = (rect.bottom - startSplit) / transitionDistance;
 
     section.style.setProperty('--sub-split-progress', Math.max(0, Math.min(1, progress)).toString());
 
@@ -176,36 +218,47 @@ function updateSplitSections() {
   });
 }
 
-// ========== TIMELINE HIGHLIGHT ==========
+// ========== TIMELINE HIGHLIGHT & PROGRESS ==========
 function updateTimeline() {
-  const sections = document.querySelectorAll('.section[data-year]');
   const timelineYears = document.querySelectorAll('.timeline-year');
   const timelineProgress = document.getElementById('timelineProgress');
 
-  const viewportCenter = window.innerHeight * 0.42;
-  let activeYear = null;
-  let bestScore = Infinity;
+  // 1. Calculate inverted scroll percentage (Top=100%, Bottom=0%)
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  let pct = docHeight > 0 ? (1 - (scrollTop / docHeight)) * 100 : 100;
+  
+  pct = Math.max(0, Math.min(100, pct));
 
-  sections.forEach(section => {
-    const rect = section.getBoundingClientRect();
-    // Must be at least partially visible
-    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-    // Distance from the section's vertical midpoint to viewport center
-    const midpoint = rect.top + rect.height / 2;
-    const dist = Math.abs(midpoint - viewportCenter);
-    if (dist < bestScore) {
-      bestScore = dist;
-      activeYear = section.dataset.year;
-    }
-  });
+  // 2. Update the visual progress bar height
+  if (timelineProgress) {
+    timelineProgress.style.height = pct + '%';
+    
+    // PHYSICAL SYNC: Match dots to the actual visible tip of the bar.
+    // This is more robust than percentage math alone.
+    const barRect = timelineProgress.getBoundingClientRect();
+    const barTip = barRect.top;
 
-  timelineYears.forEach(el => {
-    el.classList.toggle('active', el.dataset.year === activeYear);
-  });
+    let currentActiveIndex = -1;
+    
+    timelineYears.forEach((el) => {
+      const dot = el.querySelector('.timeline-dot');
+      const idx = parseInt(el.dataset.index);
+      if (!dot) return;
+      
+      const dotRect = dot.getBoundingClientRect();
+      const dotCenter = dotRect.top + dotRect.height / 2;
 
-  // Progress bar: scroll percentage across full document
-  const scrollTop  = window.scrollY;
-  const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
-  const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-  if (timelineProgress) timelineProgress.style.height = pct + '%';
+      // When the rising bar TIP (barTip) reaches or passes the DOT CENTER.
+      // Since it's rising (barTip decreasing), barTip <= dotCenter means it hit it.
+      if (barTip <= dotCenter + 2) {
+        currentActiveIndex = Math.max(currentActiveIndex, idx);
+      }
+    });
+
+    timelineYears.forEach(el => {
+      const idx = parseInt(el.dataset.index);
+      el.classList.toggle('active', idx === currentActiveIndex);
+    });
+  }
 }

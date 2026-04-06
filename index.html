@@ -11,6 +11,11 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- Ambient Background System -->
+  <div id="ambient-bg" class="ambient-bg"></div>
+  <div class="ambient-overlay"></div>
+
   <!-- Landing Overlay -->
   <div id="landing" class="landing">
     <div class="landing-content">
@@ -26,15 +31,20 @@
       <!-- Timeline Sidebar -->
       <aside class="timeline" id="timeline">
         <div class="timeline-track">
+          <!-- The visual line track -->
           <div class="timeline-line">
             <div class="timeline-progress" id="timelineProgress"></div>
           </div>
-          <div class="timeline-year active" data-year="2026"><span class="timeline-dot"></span><span class="timeline-label">2026</span></div>
-          <div class="timeline-year" data-year="2025"><span class="timeline-dot"></span><span class="timeline-label">2025</span></div>
-          <div class="timeline-year" data-year="2024"><span class="timeline-dot"></span><span class="timeline-label">2024</span></div>
-          <div class="timeline-year" data-year="2023"><span class="timeline-dot"></span><span class="timeline-label">2023</span></div>
-          <div class="timeline-year" data-year="2022"><span class="timeline-dot"></span><span class="timeline-label">2022</span></div>
-          <div class="timeline-year" data-year="2021"><span class="timeline-dot"></span><span class="timeline-label">2021</span></div>
+          
+          <!-- The Year Markers -->
+          <div class="timeline-years">
+            <div class="timeline-year" data-year="2026" data-index="5"><span class="timeline-dot"></span><span class="timeline-label">2026</span></div>
+            <div class="timeline-year" data-year="2025" data-index="4"><span class="timeline-dot"></span><span class="timeline-label">2025</span></div>
+            <div class="timeline-year" data-year="2024" data-index="3"><span class="timeline-dot"></span><span class="timeline-label">2024</span></div>
+            <div class="timeline-year" data-year="2023" data-index="2"><span class="timeline-dot"></span><span class="timeline-label">2023</span></div>
+            <div class="timeline-year" data-year="2022" data-index="1"><span class="timeline-dot"></span><span class="timeline-label">2022</span></div>
+            <div class="timeline-year" data-year="2021" data-index="0"><span class="timeline-dot"></span><span class="timeline-label">2021</span></div>
+          </div>
         </div>
       </aside>
 
@@ -42,7 +52,7 @@
       <main class="content" id="content">
 
         <!-- 2026: Coming Soon (full-width, no subsections) -->
-        <section class="section section--full" data-year="2026" id="section-2026">
+        <section class="section section--full" data-year="2026" id="section-2026" data-color="#000000">
           <div class="section-hero-full">
             <span class="section-year-tag">2026</span>
             <h2>Coming Soon</h2>
@@ -51,7 +61,7 @@
         </section>
 
         <!-- 2025: Star Wars (split, 2 subsections) -->
-        <section class="section section--split" data-year="2025" id="section-2025">
+        <section class="section section--split" data-year="2025" id="section-2025" data-color="#181B5E">
           <div class="section-row">
             <div class="section-left">
               <div class="section-title-sticky">
@@ -61,10 +71,21 @@
               </div>
             </div>
             <div class="section-right">
+              <!-- Reversing DOM order for Bottom-Up visual flow -->
               <div class="hero-zone"></div>
               
-              <!-- 3-COLUMN NESTED SPLIT FOR EPISODE IV -->
-              <div class="subsection subsection--split">
+              <!-- NORMAL SUBSECTION FOR EPISODE V (NOW 02 TOP) -->
+              <div class="subsection" data-color="#0F4C75">
+                <div class="subsection-inner">
+                  <span class="subsection-number">02</span>
+                  <h3>Episode V: The Empire Strikes Back</h3>
+                  <p>After the Rebels are overpowered by the Empire on the ice planet Hoth, Luke begins Jedi training with Yoda, while his friends are pursued across the galaxy.</p>
+                  <div class="subsection-meta"><span class="tag">Sci-Fi</span><span class="tag">Drama</span><span class="tag">1980</span></div>
+                </div>
+              </div>
+
+              <!-- 3-COLUMN NESTED SPLIT FOR EPISODE IV (NOW 01 BOTTOM) -->
+              <div class="subsection subsection--split" data-color="#311459">
                 <div class="subsection-row">
                   <div class="subsection-left">
                     <div class="subsection-title-sticky">
@@ -88,25 +109,35 @@
                         <p>A daring rescue mission inside the Imperial station followed by an epic trench run to destroy the Empire's ultimate weapon.</p>
                       </div>
                     </div>
+                    <div class="sub-subsection with-gallery">
+                      <div class="subsection-inner">
+                        <h4>Trench Run Archives</h4>
+                        <p>A staggering visual culmination of practical effects charting the vast reaches of the galaxy.</p>
+                      </div>
+                      <div class="gallery-scatter">
+                        <div class="art-container art-1" data-speed="0.2">
+                          <img src="https://images.unsplash.com/photo-1537420327992-d6a192ee6ea9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Star Wars theme">
+                        </div>
+                        <div class="art-container art-2" data-speed="-0.15">
+                          <img src="https://images.unsplash.com/photo-1614728263952-84ea256f9679?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Star Wars space">
+                        </div>
+                        <div class="art-container art-3" data-speed="0.3">
+                          <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Nebula">
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
               <!-- NORMAL SUBSECTION FOR EPISODE V -->
-              <div class="subsection">
-                <div class="subsection-inner">
-                  <span class="subsection-number">02</span>
-                  <h3>Episode V: The Empire Strikes Back</h3>
-                  <p>After the Rebels are overpowered by the Empire on the ice planet Hoth, Luke begins Jedi training with Yoda, while his friends are pursued across the galaxy by Darth Vader and bounty hunter Boba Fett.</p>
-                  <div class="subsection-meta"><span class="tag">Sci-Fi</span><span class="tag">Drama</span><span class="tag">1980</span></div>
-                </div>
-              </div>
+              <!-- (Moved above Ep IV in DOM to be on top visually) -->
             </div>
           </div>
         </section>
 
         <!-- 2024: Lord of the Rings (split, 2 subsections) -->
-        <section class="section section--split" data-year="2024" id="section-2024">
+        <section class="section section--split" data-year="2024" id="section-2024" data-color="#0D4722">
           <div class="section-row">
             <div class="section-left">
               <div class="section-title-sticky">
@@ -117,20 +148,49 @@
             </div>
             <div class="section-right">
               <div class="hero-zone"></div>
-              <div class="subsection">
-                <div class="subsection-inner">
-                  <span class="subsection-number">01</span>
-                  <h3>The Fellowship of the Ring</h3>
-                  <p>A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.</p>
-                  <div class="subsection-meta"><span class="tag">Fantasy</span><span class="tag">Adventure</span><span class="tag">2001</span></div>
-                </div>
-              </div>
-              <div class="subsection">
+
+              <div class="subsection" data-color="#216E3E">
                 <div class="subsection-inner">
                   <span class="subsection-number">02</span>
                   <h3>The Two Towers</h3>
-                  <p>While Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally, Saruman, and his hordes of Isengard.</p>
+                  <p>While Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally, Saruman.</p>
                   <div class="subsection-meta"><span class="tag">Fantasy</span><span class="tag">War</span><span class="tag">2002</span></div>
+                </div>
+              </div>
+
+              <div class="subsection subsection--split" data-color="#185C33">
+                <div class="subsection-row">
+                  <div class="subsection-left">
+                    <div class="subsection-title-sticky">
+                      <span class="subsection-number">01</span>
+                      <h3>The Fellowship of the Ring</h3>
+                      <p class="subsection-desc--fade">A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring.</p>
+                      <div class="subsection-meta subsection-desc--fade"><span class="tag">Fantasy</span><span class="tag">Adventure</span><span class="tag">2001</span></div>
+                    </div>
+                  </div>
+                  <div class="subsection-right">
+                    <div class="hero-zone"></div>
+                    <div class="sub-subsection with-gallery">
+                      <div class="subsection-inner">
+                        <h4>Middle-Earth Vistas</h4>
+                        <p>Sweeping landscapes of New Zealand served as the majestic canvas for Tolkien's legendary world.</p>
+                      </div>
+                      <div class="gallery-scatter">
+                        <div class="art-container art-1" data-speed="-0.2">
+                          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Mountains">
+                        </div>
+                        <div class="art-container art-2" data-speed="0.25">
+                          <img src="https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Deep Forest">
+                        </div>
+                        <div class="art-container art-3" data-speed="-0.1">
+                          <img src="https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Nordic Landscape">
+                        </div>
+                        <div class="art-container art-4" data-speed="0.15">
+                          <img src="https://images.unsplash.com/photo-1508614589041-895b88991e3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Vast Nature">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -138,7 +198,7 @@
         </section>
 
         <!-- 2023: The Matrix (split, 2 subsections) -->
-        <section class="section section--split" data-year="2023" id="section-2023">
+        <section class="section section--split" data-year="2023" id="section-2023" data-color="#0F5E24">
           <div class="section-row">
             <div class="section-left">
               <div class="section-title-sticky">
@@ -149,15 +209,9 @@
             </div>
             <div class="section-right">
               <div class="hero-zone"></div>
-              <div class="subsection">
-                <div class="subsection-inner">
-                  <span class="subsection-number">01</span>
-                  <h3>The Matrix</h3>
-                  <p>A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers. Reality is not what it seems.</p>
-                  <div class="subsection-meta"><span class="tag">Sci-Fi</span><span class="tag">Action</span><span class="tag">1999</span></div>
-                </div>
-              </div>
-              <div class="subsection">
+
+              <!-- SUBS 02 RELOADED (ON TOP VISUALLY) -->
+              <div class="subsection" data-color="#1A9630">
                 <div class="subsection-inner">
                   <span class="subsection-number">02</span>
                   <h3>The Matrix Reloaded</h3>
@@ -165,12 +219,46 @@
                   <div class="subsection-meta"><span class="tag">Sci-Fi</span><span class="tag">Action</span><span class="tag">2003</span></div>
                 </div>
               </div>
+
+              <!-- SUBS 01 ORIGINAL (AT BOTTOM VISUALLY) -->
+              <div class="subsection subsection--split" data-color="#157A2A">
+                <div class="subsection-row">
+                  <div class="subsection-left">
+                    <div class="subsection-title-sticky">
+                      <span class="subsection-number">01</span>
+                      <h3>The Matrix</h3>
+                      <p class="subsection-desc--fade">A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.</p>
+                      <div class="subsection-meta subsection-desc--fade"><span class="tag">Sci-Fi</span><span class="tag">Action</span><span class="tag">1999</span></div>
+                    </div>
+                  </div>
+                  <div class="subsection-right">
+                    <div class="hero-zone"></div>
+                    <div class="sub-subsection with-gallery">
+                      <div class="subsection-inner">
+                        <h4>Cyberpunk Aesthetics</h4>
+                        <p>Defining the visual style of a generation with trench coats, bullet time, and towering neon logic grids.</p>
+                      </div>
+                      <div class="gallery-scatter">
+                        <div class="art-container art-1" data-speed="0.3">
+                          <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Matrix Code">
+                        </div>
+                        <div class="art-container art-2" data-speed="-0.25">
+                          <img src="https://images.unsplash.com/photo-1515630278258-407f66498911?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Neon city">
+                        </div>
+                        <div class="art-container art-4" data-speed="0.1">
+                          <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="art-img" alt="Retro tech">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         <!-- 2022: Harry Potter (split, 1 subsection) -->
-        <section class="section section--split" data-year="2022" id="section-2022">
+        <section class="section section--split" data-year="2022" id="section-2022" data-color="#5E3D0F">
           <div class="section-row">
             <div class="section-left">
               <div class="section-title-sticky">
@@ -181,7 +269,7 @@
             </div>
             <div class="section-right">
               <div class="hero-zone"></div>
-              <div class="subsection">
+              <div class="subsection" data-color="#7A5215">
                 <div class="subsection-inner">
                   <span class="subsection-number">01</span>
                   <h3>The Philosopher's Stone</h3>
@@ -194,7 +282,7 @@
         </section>
 
         <!-- 2021: Inception (full-width, no subsections) -->
-        <section class="section section--full" data-year="2021" id="section-2021">
+        <section class="section section--full" data-year="2021" id="section-2021" data-color="#2D4263">
           <div class="section-hero-full">
             <span class="section-year-tag">2021</span>
             <h2>Inception</h2>
