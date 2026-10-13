@@ -720,6 +720,28 @@ body {
   max-width: 520px;
   line-height: 1.7;
 }
+.section-desc--list {
+  max-width: 680px;
+  text-align: left;
+}
+.section-desc--list strong {
+  display: block;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: rgba(255,255,255,0.75);
+  font-weight: 500;
+}
+
+/* NASA: landscape + portrait photos side by side, same height
+   (flex-grow = image aspect ratio, so both rows end up equally tall) */
+.media-grid--nasa {
+  width: 100%;
+  max-width: 960px;
+  margin: 2rem auto 0 auto;
+  overflow: visible;
+}
+.media-grid.media-grid--nasa .media-container { flex: var(--ar) 1 0; }
+.media-grid.media-grid--nasa img { max-height: none; object-fit: cover; }
 
 /* Section separator */
 .section--full::after {
@@ -761,6 +783,7 @@ body {
     font-size: calc(1.2rem + 1.8rem * (1 - var(--split-progress)));
   }
   
+
   .subsection:not(.subsection--split) { padding: 3rem 1.5rem; }
   .sub-subsection { padding: 3rem 1.5rem; }
 
